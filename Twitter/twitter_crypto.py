@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 
+import pandas
 import streamlit as st
 import tweepy
 import constant
@@ -46,7 +47,6 @@ def crypto_tweets():
         st.write("Tweepy Error: {}".format(e), "{} IS PRIVATE".format(e))
     pass
 
-
 def crypto_graph():
     graph = {}
     for selectedUser in constant.TWITTER_CRYPTOUSER_USERNAMES:
@@ -69,17 +69,19 @@ def crypto_graph():
                                     graph[word[1:]] = 1
         except tweepy.error.TweepError as e:
             continue
-    st.write(graph)
     data = api.rate_limit_status()
     st.write(data['resources']['statuses']['/statuses/user_timeline'])
+    st.subheader('Today\'s Twitter recent crypto mentioned ')
+    df = pandas.Series(graph, name='Value')
+    df.index.name = 'Name'
+    st.bar_chart(df)
     return
     pass
 
 
 def crypto():
-
     st.subheader('Crypto')
-    crypto_category = st.sidebar.selectbox("Crypto Category ",["Tweets","Graph"], index=0, key="cryto_user")
+    crypto_category = st.sidebar.selectbox("Crypto Category ", ["Tweets", "Graph"], index=0, key="cryto_user")
 
     if crypto_category == "Tweets":
         crypto_tweets()
@@ -103,8 +105,6 @@ def friend_list(selectedUser):
     st.write(f'Friends: {len(friend_list)}')
     st.image(user.profile_image_url)
     return
-
-
 
 
 def checkKey(dict, key):

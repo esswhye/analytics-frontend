@@ -17,12 +17,11 @@ st.title(option)
 
 # https://www.tweepy.org/
 if option == 'Twitter':
-
-    twitterCategory = st.sidebar.selectbox("Select Category ", config.TWITTER_CATEGORY)
+    twitterCategory = st.sidebar.selectbox("Select Category ", constant.TWITTER_CATEGORY)
     try:
-        if twitterCategory == config.TWITTER_CATEGORY[0]:
+        if twitterCategory == constant.TWITTER_CATEGORY[0]:
             crypto()
-        if twitterCategory == config.TWITTER_CATEGORY[1]:
+        if twitterCategory == constant.TWITTER_CATEGORY[1]:
             twitter_stock.stock()
     except tweepy.TweepError as e:
         st.write(e)
