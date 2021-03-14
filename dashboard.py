@@ -9,7 +9,7 @@ import constant
 from Twitter import twitter_stock
 from Twitter.twitter_crypto import crypto
 
-#streamlit run [filename]
+
 st.sidebar.title("Options")
 option = st.sidebar.selectbox("Which Dashboard?", constant.LIST_DASHBOARD_NAMES)
 
